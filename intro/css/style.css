@@ -1,121 +1,152 @@
-/* --- 1. CẤU TRÚC CHUNG --- */
+/* --- 1. THIẾT LẬP CHUNG --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; padding: 0;
+}
+
 .intro-section {
     position: relative;
-    overflow: hidden;
-    padding-top: 50px;
-    padding-bottom: 0;
-    min-height: 900px; /* Đủ cao để chứa hết cảnh */
+    width: 100%;
+    min-height: 100vh; /* Chiếm toàn bộ chiều cao màn hình */
+    background-color: #ffffff;
+    overflow: hidden; /* Ẩn các phần tử bay ra ngoài */
+    padding-top: 20px;
 }
 
-.z-content { position: relative; z-index: 20; } /* Nội dung nằm trên cùng */
+/* --- CSS CHO LOGO--- */
+.logo-standalone-wrapper {
+    position: absolute; /* Đưa logo ra khỏi dòng chảy */
+    z-index: 50;    /* Đảm bảo nó nổi lên trên tất cả */
+    
+    top: 50px;      /* ĐIỂM CHỈNH ĐỘ CAO: Bạn thay đổi giá trị này */
+    left: 40px;     /* Vị trí ngang (căn từ lề trái) */
+}
 
-/* --- 2. CÁC LỚP NỀN (LAYERS) --- */
+.top-logo-icon {
+    max-width: 250px; /* Kích thước Icon */
+    
+    
+    transition: all 0.3s;
+}
 
-/* Lớp Bầu Trời (Sau ngọn đồi) */
-.sky-layer {
+/* --- TẠO MẢNG BẦU TRỜI RIÊNG BIỆT --- */
+.sky-backdrop {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;    /* Chiều cao khoảng 65% màn hình (để nó nằm sau các thẻ) */
+    
+    /* Màu xanh ngọc giống thiết kế */
+    background-color: #90e0ef; 
+    /* Hoặc dùng gradient nhẹ nếu muốn giống hệt ảnh mẫu: */
+    background: linear-gradient(to bottom, #89f7fe, #66a6ff); 
+    
+    /* TẠO ĐƯỜNG CONG LỚN Ở GÓC TRÁI TRÊN */
+    border-top-left-radius: 100% 30%; 
+    
+    /* Thứ tự xếp lớp: Trên nền trắng (0), dưới Đồi (5) và Decor (10) */
+    z-index: 1; 
 }
 
-/* Lớp Ngọn Đồi */
-.hill-layer {
+
+.z-content{
+    position: relative; 
+    z-index: 30;
+    margin-top: 300px;
+}
+/* --- 3. STYLE CHO 3 CARD (QUAN TRỌNG) --- */
+.intro-card {
+    position: relative;
+    margin-bottom: 30px;
+    z-index: 40;
+    transition: transform 0.3s ease;
+}
+.intro-card:hover { transform: translateY(-5px); }
+
+/* Ảnh của Card */
+.card-img img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+}
+
+/* Hộp nội dung màu (Phần chồng lên) */
+.card-text-box {
+    width: 80%; /* Nhỏ hơn ảnh */
+    margin: 0 auto; /* Căn giữa so với ảnh */
+    margin-top: -75px; /* KÉO LÊN ĐỂ CHỒNG VÀO ẢNH */
+    padding: 20px;
+    color: white;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.bg-blue { 
+    background-color: #004898; 
+    border-radius: 35px 0px 0px; 
+}
+
+.bg-yellow { 
+    background-color: #E6B729; 
+    border-radius: 0;
+}
+
+/* 3. Card PHẢI (Đỏ) */
+/* Bo góc Trên-Trái (hướng vào trong) và Dưới-Phải */
+.bg-red { 
+    background-color: #9E0606; 
+    border-radius: 0px 35px 0px 0px; 
+}
+
+.card-text-box h4 { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
+.card-text-box p { font-size: 0.85rem; margin-bottom: 5px; line-height: 1.4; }
+.jp-sub { font-size: 0.8rem; opacity: 0.9; }
+
+/* Đường kẻ ngang */
+.divider { width: 40px; height: 2px; background: white; margin-bottom: 10px; }
+.divider.dark { background: #333; }
+
+/* --- 4. THÔNG ĐIỆP --- */
+.mission-text {
+    margin-top: 40px;
+    margin-bottom: 100px;
+    position: relative;
+    z-index: 40;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+
+
+/* --- 5. NỀN NGỌN ĐỒI (HILL) --- */
+.hill-bg {
     position: absolute;
     bottom: 0; left: 0; width: 100%;
-    z-index: 5; /* Đè lên bầu trời */
+    z-index: 10; /* Nằm trên nền trời, dưới nội dung */
     line-height: 0;
 }
+.hill-bg img { width: 100%; height: auto; }
 
-/* Lớp Decor (Chứa con vật) */
+
+/* --- 6. ĐỊNH VỊ TRANG TRÍ (DECOR) - VỊ TRÍ CHUẨN --- */
 .decor-layer {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 10; /* Đè lên đồi nhưng dưới nội dung Text */
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 20; /* Bay lơ lửng */
 }
 .decor-item { position: absolute; }
 
-
-/* --- 3. ĐỊNH VỊ CHI TIẾT CÁC CON VẬT --- */
-
-/* >> Nhóm Trên Trời << */
-.sun { top: 3%; right: 3%; width: 150px; }
-.balloon { top: 12%; left: 2%; width: 110px; }
-.birds { top: 22%; left: 40%; width: 100px; } /* Cặp chim */
+/* Vị trí cụ thể (Dựa trên ảnh mẫu) */
+.sun { top: 2%; right: 2%; width: 160px; }
+.balloon { top: 25%; left: 1%; width: 110px; opacity: 0.9; } /* Hơi mờ như mẫu */
+.birds { top: 25%; left: 45%; width: 80px; }
 .cloud-1 { top: 10%; right: 20%; width: 90px; opacity: 0.8; }
-.cloud-2 { top: 18%; right: 12%; width: 120px; opacity: 0.9; }
+.cloud-2 { top: 18%; right: 15%; width: 120px; opacity: 0.9; }
 
-/* >> Nhóm Côn Trùng Bay << */
-/* Ong Trái */
-.bee-left { 
-    bottom: 30%; left: 15%; width: 50px; 
-    z-index: 15; /* Bay trước đồi */
-}
-/* Ong Phải */
-.bee-right { 
-    bottom: 35%; right: 15%; width: 50px; 
-    z-index: 15;
-}
-
-/* Bướm Tím (Thường bên phải) */
-.butterfly-purple { 
-    bottom: 28%; right: 25%; width: 55px; 
-    z-index: 15;
-}
-/* Bướm Xanh (Thường bên trái hoặc giữa) */
-.butterfly-green { 
-    bottom: 25%; left: 25%; width: 50px; 
-    z-index: 15;
-}
-
-/* Chuồn chuồn (Bay cao hơn chút) */
-.dragonfly { 
-    bottom: 45%; left: 50%; width: 70px; 
-    transform: translateX(-50%); /* Căn giữa */
-}
-
-/* >> Nhóm Dưới Đất / Trên Cỏ << */
-/* Bọ Rùa (Bò dưới thấp) */
-.ladybug { 
-    bottom: 5%; right: 40%; width: 40px; 
-    z-index: 15;
-}
-/* Cụm Hoa (Góc) */
-.flowers { 
-    bottom: 0; left: 0; width: 180px; 
-    z-index: 15;
-}
-
-
-/* --- 4. STYLE CHO CARD & LOGO (Giữ nguyên như cũ) --- */
-.top-logo { max-width: 250px; }
-
-.intro-card {
-    position: relative; margin-bottom: 30px;
-    transition: transform 0.3s ease;
-}
-.intro-card:hover { transform: translateY(-10px); }
-
-.card-img img {
-    width: 100%; height: 250px; object-fit: cover;
-    border-radius: 10px 10px 0 0;
-}
-
-.card-content {
-    padding: 20px; color: white;
-    border-radius: 0 30px 0 30px;
-    margin-top: -40px; position: relative; z-index: 2;
-    width: 90%; margin-left: auto; margin-right: auto;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-.bg-blue { background-color: #0056b3; }
-.bg-yellow { background-color: #eebc31; color: #333 !important; }
-.bg-yellow hr { border-color: #333; }
-.bg-red { background-color: #a80000; }
-.jp-text { font-size: 0.9em; opacity: 0.9; }
-
-.mission-text {
-    position: relative; z-index: 20;
-    color: #333; font-size: 1.1rem;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
-}
+/* Côn trùng & Hoa (Căn theo bottom để khớp với đồi) */
+.dragonfly { bottom: 12%; left: 50%; transform: translateX(-50%); width: 70px; }
+.bee-left { bottom: 35%; left: 15%; width: 50px; }
+.bee-right { bottom: 38%; right: 18%; width: 50px; transform: scaleX(-1); }
+.butterfly-purple { bottom: 30%; right: 28%; width: 50px; }
+.butterfly-green { bottom: 30%; left: 25%; width: 45px; } /* Mẫu chỉ có bướm tím, tôi thêm bướm xanh cho cân */
+.ladybug { bottom: 5%; right: 40%; width: 40px; z-index: 30; } /* Bò lên đồi */
+.flowers { bottom: 0; left: 0; width: 100%; z-index: 25; } /* Nếu hoa dính liền đồi thì chỉnh khác */
