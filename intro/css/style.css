@@ -1,0 +1,121 @@
+/* --- 1. CẤU TRÚC CHUNG --- */
+.intro-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: 50px;
+    padding-bottom: 0;
+    min-height: 900px; /* Đủ cao để chứa hết cảnh */
+}
+
+.z-content { position: relative; z-index: 20; } /* Nội dung nằm trên cùng */
+
+/* --- 2. CÁC LỚP NỀN (LAYERS) --- */
+
+/* Lớp Bầu Trời (Sau ngọn đồi) */
+.sky-layer {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+}
+
+/* Lớp Ngọn Đồi */
+.hill-layer {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    z-index: 5; /* Đè lên bầu trời */
+    line-height: 0;
+}
+
+/* Lớp Decor (Chứa con vật) */
+.decor-layer {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 10; /* Đè lên đồi nhưng dưới nội dung Text */
+}
+.decor-item { position: absolute; }
+
+
+/* --- 3. ĐỊNH VỊ CHI TIẾT CÁC CON VẬT --- */
+
+/* >> Nhóm Trên Trời << */
+.sun { top: 3%; right: 3%; width: 150px; }
+.balloon { top: 12%; left: 2%; width: 110px; }
+.birds { top: 22%; left: 40%; width: 100px; } /* Cặp chim */
+.cloud-1 { top: 10%; right: 20%; width: 90px; opacity: 0.8; }
+.cloud-2 { top: 18%; right: 12%; width: 120px; opacity: 0.9; }
+
+/* >> Nhóm Côn Trùng Bay << */
+/* Ong Trái */
+.bee-left { 
+    bottom: 30%; left: 15%; width: 50px; 
+    z-index: 15; /* Bay trước đồi */
+}
+/* Ong Phải */
+.bee-right { 
+    bottom: 35%; right: 15%; width: 50px; 
+    z-index: 15;
+}
+
+/* Bướm Tím (Thường bên phải) */
+.butterfly-purple { 
+    bottom: 28%; right: 25%; width: 55px; 
+    z-index: 15;
+}
+/* Bướm Xanh (Thường bên trái hoặc giữa) */
+.butterfly-green { 
+    bottom: 25%; left: 25%; width: 50px; 
+    z-index: 15;
+}
+
+/* Chuồn chuồn (Bay cao hơn chút) */
+.dragonfly { 
+    bottom: 45%; left: 50%; width: 70px; 
+    transform: translateX(-50%); /* Căn giữa */
+}
+
+/* >> Nhóm Dưới Đất / Trên Cỏ << */
+/* Bọ Rùa (Bò dưới thấp) */
+.ladybug { 
+    bottom: 5%; right: 40%; width: 40px; 
+    z-index: 15;
+}
+/* Cụm Hoa (Góc) */
+.flowers { 
+    bottom: 0; left: 0; width: 180px; 
+    z-index: 15;
+}
+
+
+/* --- 4. STYLE CHO CARD & LOGO (Giữ nguyên như cũ) --- */
+.top-logo { max-width: 250px; }
+
+.intro-card {
+    position: relative; margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+.intro-card:hover { transform: translateY(-10px); }
+
+.card-img img {
+    width: 100%; height: 250px; object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.card-content {
+    padding: 20px; color: white;
+    border-radius: 0 30px 0 30px;
+    margin-top: -40px; position: relative; z-index: 2;
+    width: 90%; margin-left: auto; margin-right: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.bg-blue { background-color: #0056b3; }
+.bg-yellow { background-color: #eebc31; color: #333 !important; }
+.bg-yellow hr { border-color: #333; }
+.bg-red { background-color: #a80000; }
+.jp-text { font-size: 0.9em; opacity: 0.9; }
+
+.mission-text {
+    position: relative; z-index: 20;
+    color: #333; font-size: 1.1rem;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
